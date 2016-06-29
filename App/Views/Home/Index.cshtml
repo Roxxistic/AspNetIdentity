@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Home - Index";
+}
+
+<h2>Index</h2>
+<h3>About</h3>
+<p>This Project is based on the Chapters 13 to 15 in "Pro ASP.NET MVC 5 Platform" by Adam Freeman, 2014. It's Goal is to get to know ASP.NET Identity.</p>
+
+<h3>User Details: Key Information</h3>
+<table class="table">
+	<thead>
+	<tr>
+		<th>Key</th>
+		<th>Value</th>
+	</tr>
+	</thead>
+	@foreach (KeyValuePair<string, object> item in Model)
+	{
+		<tr>
+			<td>@item.Key</td>
+			<td>@item.Value</td>
+		</tr>
+	}
+</table>

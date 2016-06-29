@@ -1,0 +1,47 @@
+﻿@using App.Models
+@using App.Identity
+@model IEnumerable<AppRole>
+@{
+    ViewBag.Title = "Role Admin: Index";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ActionLink("Create new Role", "Create", null, new {@class="btn btn-default"})
+
+<table class="table table-striped">
+	<tr>
+		<th>Role ID</th>
+		<th>Role Name</th>
+		<th>Users</th>
+		<th></th>
+	</tr>
+	@foreach (AppRole role in Model)
+	{
+	<tr>
+		<td>@role.Id</td>
+		<td>@role.Name</td>
+		<td>
+			@if (role.Users == null || role.Users.Count == 0)
+			{
+				@: No Users in Role.
+					}
+			else
+			{
+				<ul>
+					@foreach (var userName in role.Users.Select(x => Html.GetUserName(x.UserId)))
+					{
+						<li>@userName</li>
+					}
+				</ul>
+
+			}
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = role.Id }, new { @class = "btn btn-default" })
+			@Html.ActionLink("Edit Users", "EditUsers", new { id = role.Id }, new { @class = "btn btn-default" })
+		</td>
+	</tr>
+	}
+</table>
+

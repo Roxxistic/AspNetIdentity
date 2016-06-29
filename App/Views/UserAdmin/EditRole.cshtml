@@ -1,0 +1,47 @@
+﻿@model App.ViewModels.UserAdminEditRoleViewModel
+@{
+	ViewBag.Title = "User Admin: Edit Role";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ValidationSummary(false)
+
+<div class="form-group">
+	<label>User Email / User Name</label>
+	<p class="form-control-static">@Model.Email</p>
+</div>
+@using (Html.BeginForm())
+{
+	@Html.HiddenFor(x => x.Id)
+
+	<div class="form-group">
+
+		<label>Rollen</label>
+
+		@{
+			var roles = Model.AllRoleNames;
+
+			<table>
+				@foreach (var roleName in roles)
+				{
+					<tr>
+						<td>
+							<input type="checkbox" name="checkboxSelectedRoleNames" value="@roleName" id="@roleName"
+								   @if (Model.AssignedRoleNames.Contains(roleName)) { @: checked="checked"
+								   							       } />
+
+						</td>
+						<td>
+							<label>@roleName</label>
+						</td>
+					</tr>
+				}
+			</table>
+		}
+
+	</div>
+
+	<button type="submit" class="btn btn-primary">Save</button>
+	@Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-default"})
+}

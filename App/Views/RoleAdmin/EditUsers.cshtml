@@ -1,0 +1,35 @@
+﻿@using System.Linq
+@using App.Models
+@using Microsoft.AspNet.Identity
+@model App.ViewModels.RoleAdminEditUsersViewModel
+@{
+    ViewBag.Title = "EditUsers";
+}
+
+<h2>Edit Users</h2>
+
+@using (Html.BeginForm())
+{
+	<input type="hidden" name="roleName" value="@Model.RoleName"/>
+
+	<table class="table table-striped">
+
+			<tr><td>User ID</td><td>Is Assigned To Role "@Model.RoleName"</td></tr>
+			@foreach (var user in Model.AllUsers)
+			{
+				<tr>
+					<td>@user.UserName</td>
+					<td>
+						@{
+							string attributeChecked = Model.AssignedUsers.Select(u => u.Id).Contains(user.Id) ? "checked=\"checked\"" : "";
+							string attributeDisabled = (User.Identity.GetUserName() == user.UserName) ? "disabled=\"disabled\"" : "";
+						}
+						<input type="checkbox" name="checkboxSelectedUsers" value="@user.Id" @attributeChecked @attributeDisabled />
+					</td>
+				</tr>
+			}
+	</table>
+
+	<button type="submit" class="btn btn-primary">Save</button>
+	@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+}
